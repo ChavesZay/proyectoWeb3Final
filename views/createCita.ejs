@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Crear Cita</h1>
+    <form id="cita-form" action="/api/citas/createCita" method="POST">
+        <h2>Información de la Cita</h2>
+        <label for="id_Patient">Paciente:</label>
+        <select name="id_Patient" required>
+            <option value="">Seleccionar</option>
+            <%patients.forEach((patient)=>{ %>
+                <option value=<%=patient._id%> > <%=patient.name%> </option>
+            <% }) %>
+        </select>
+        <label for="horario">Horario:</label>
+        <select name="horario" required>
+            <option value="">Seleccionar</option>
+            <%horario.forEach((h)=>{ %>
+                <option value=<%=h.toISOString()%> > <%=h.toISOString().split('T')[0]+' '+(h.toISOString().split('T')[1]).split('.')[0]%> </option>
+            <% }) %>
+        </select>
+
+     
+        <input type="text" name="speciality" id="speciality" value="<%=doct.speciality%>"readonly>
+        <input type="text" name="nameDoctor" id="nameDoctor" value="<%=doct.name%>" readonly>
+        <input type="text" name="idDoctor" id="idDoctor" value="<%=doct.id%>" hidden>
+        <input type="submit" value="Registrar Cita" />
+    </form>
+
+</body>
+</html>
