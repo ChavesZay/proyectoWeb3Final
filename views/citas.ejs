@@ -12,7 +12,7 @@
 
 <body>
     <h1>Agregar Cita</h1>
-    <form action="/api/citas/horarios" method="post">
+    <form name="form-fechaCita" id="form-fechaCita" action="/api/citas/horarios" method="post">
         <label for="date">Fecha:</label>
         <input type="date" id="date" name="date" required>
 
@@ -55,6 +55,28 @@
 
       
 
+      <script>
+        const form = document.getElementById("form-fechaCita");
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const date = form.date.value;
+          const doctor = form.doctor.value;
+  
+          const data = { date, doctor };
+          const response = await fetch("/api/citas", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+          const json = await response.json();
+          console.log(json);
+          console.log(date);
+          console.log(doctor);
+          // Hacer algo con la respuesta
+        });
+      </script>
 
 
 </body>
