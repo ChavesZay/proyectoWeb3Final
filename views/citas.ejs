@@ -2,81 +2,89 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="./main.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 
 <body>
-    <h1>Agregar Cita</h1>
-    <form name="form-fechaCita" id="form-fechaCita" action="/api/citas/horarios" method="post">
-        <label for="date">Fecha:</label>
-        <input type="date" id="date" name="date" required>
+  <h1>Agregar Cita</h1>
+  <form name="form-fechaCita"  action="/api/citas/horarios" method="post">
+    <label for="date">Fecha:</label>
+    <input type="date" id="date" name="date" required>
 
-        <label for="doctor">Medico:</label>
-        <select name="doctor" required>
-            <option value="">Seleccionar</option>
-            <%doctors.forEach((doctor)=>{ %>
-                <option value=<%=doctor._id%> > <%=doctor.name+" ---"+doctor.speciality+"" %> </option>
-            <% }) %>
-        </select>
+    <label for="doctor">Medico:</label>
+    <select name="doctor" id="doctor" required>
+      <option value="">Seleccionar</option>
+      <%doctors.forEach((doctor)=>{ %>
 
-        <div><input type="submit" name="bnEnviar" id="bnEnviar" value="Crear Cita"></div>
-        
-    </form>
-
-
-    <table>
-        <tr>
-          <th>Paciente</td>
-          <th>Fecha</td>
-          <th>Hora</td>
-          <th>Especialidad</td>
-          <th>Medico</td>
-        </tr>
-
-        <%citas.forEach((cita)=>{ %>
-        <tr>
-          <td><%=cita.patient.name +" "+cita.patient.lastname%> </td>
-          <td><%=cita.datetime.toISOString().split("T")[0]%> </td>
-          <td><%=(cita.datetime.toISOString().split("T")[1]).split(".")[0]%> </td>
-          <td><%=cita.doctor.speciality%> </td>
-          <td><%=cita.doctor.name%> </td>
-          
-          <td>
-            <a  href="cancelarCita/cita._id">Eliminar</a>
-          </td>
-        </tr>
+        <option value=<%=doctor._id%> > <%=doctor.name+" ---"+doctor.speciality+"" %>
+        </option>
         <% }) %>
-      </table>
+    </select>
 
-      
+    <div><input type="submit" name="bnEnviar" id="bnEnviar" value="Crear Cita"></div>
 
-      <script>
-        const form = document.getElementById("form-fechaCita");
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault();
-          const date = form.date.value;
-          const doctor = form.doctor.value;
-  
-          const data = { date, doctor };
-          const response = await fetch("/api/citas", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
-          const json = await response.json();
-          console.log(json);
-          console.log(date);
-          console.log(doctor);
-          // Hacer algo con la respuesta
+  </form>
+
+
+  <table>
+    <tr>
+      <th>Paciente</td>
+      <th>Fecha</td>
+      <th>Hora</td>
+      <th>Especialidad</td>
+      <th>Medico</td>
+    </tr>
+
+    <%citas.forEach((cita)=>{ %>
+      <tr>
+        <td>
+          <%=cita.patient.name +" "+cita.patient.lastname%> </td>
+          <td><%=cita.datetime.toISOString().split(" T")[0]%>
+        </td>
+        <td>
+          <%=(cita.datetime.toISOString().split("T")[1]).split(".")[0]%>
+        </td>
+        <td>
+          <%=cita.doctor.speciality%>
+        </td>
+        <td>
+          <%=cita.doctor.name%>
+        </td>
+
+        <td>
+          <a href="cancelarCita/cita._id">Eliminar</a>
+        </td>
+      </tr>
+      <% }) %>
+  </table>
+
+
+  <!--<script>
+    const frutas = () =>
+      axios.get("https://app-citas-node.onrender.com/api/citas", {
+        responseType: "json",
+      })
+        .then((result) => {
+          const { data } = result;
+          const { doctors } = data;
+          const divRow = document.querySelector(".row.row-cols-1.row-cols-md-3");
+          const select = document.getElementById("doctor");
+          doctors.forEach((doctor) => {
+            const option = document.createElement("option");
+            option.value = doctor._id;
+            option.text = doctor.name;
+            select.appendChild(option);
+          })
         });
-      </script>
+
+
+    frutas();
+  </script>-->
 
 
 </body>

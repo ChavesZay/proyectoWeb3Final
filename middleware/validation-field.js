@@ -9,7 +9,6 @@ const validate_fields= async(req,res,next)=>{
 
 }
 
-
 module.exports={
     validate_fields  
 }

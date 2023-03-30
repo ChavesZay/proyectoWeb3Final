@@ -1,6 +1,5 @@
 const { request, response } = require('express');
-const Cita = require('../models/citas.js');
-const Usuario = require('../models/users.js');
+const Appointment = require('../models/appointment.js');
 const Patient = require('../models/patients.js');
 const Doctor = require('../models/doctor.js');
 const { horarioDisponible } = require('../helpers/horarioDisponible')
@@ -9,7 +8,7 @@ const { horarioDisponible } = require('../helpers/horarioDisponible')
 
 const citasGET = async (req = request, res = response) => {
     try {
-        const citas = await Cita.find({ 'state': true });
+        const citas = await Appointment.find({ 'state': true });
         const doctors = await Doctor.find({ 'state': true });
         res.json(
             {
@@ -18,7 +17,7 @@ const citasGET = async (req = request, res = response) => {
                 citas
             }
         );
-        // res.render("citas", { doctors: doctors, citas: citas });
+         //res.render("citas", { doctors: doctors, citas: citas });
 
     } catch (error) {
         console.log(err);
@@ -26,18 +25,14 @@ const citasGET = async (req = request, res = response) => {
     }
 }
 
-//este no es necesario
+//Eliminar no se ocupa
 const citasHorarioPOST = async (req = request, res = response) => {
     try {
         const { date, doctor } = req.body;
         console.log(req.body);
-        // var ruta = "createCita/" + doctor + "?date=" + date;
-        const citas = await Cita.find({
-            $and: [{ 'estado': true }, { 'doctor._id': doctor }, { datetime: { $gte: fecha } },
-            { datetime: { $lt: new Date(fecha.getTime() + 1440 * 60000) } }]
-        }, { datetime: 1, _id: 0 });
-        const hDisponible = horarioDisponible(fecha, citas);
-        res.json(
+         const fecha=new Date(date);
+        const hDisponible = horarioDisponible(fecha, doctor);
+          res.json(
             {
                 ok: 200,
                 date,
@@ -45,6 +40,7 @@ const citasHorarioPOST = async (req = request, res = response) => {
                 hDisponible
             }
         );
+       // var ruta = "createCita/" + doctor + "?date=" + date;
         // res.redirect(ruta);
     } catch (error) {
         console.log(error);
@@ -60,11 +56,7 @@ const horariosGet = async (req = request, res = response) => {
         const { doctor } = req.params;
         const { date } = req.query;
         const fecha = new Date(date.split('T')[0]);
-        const citas = await Cita.find({
-            $and: [{ 'estado': true }, { 'doctor._id': doctor }, { datetime: { $gte: fecha } },
-            { datetime: { $lt: new Date(fecha.getTime() + 1440 * 60000) } }]
-        }, { datetime: 1, _id: 0 });
-        const hDisponible = horarioDisponible(fecha, citas);
+        const hDisponible = horarioDisponible(fecha, doctor);
         res.json(
             {
                 ok: 200,
@@ -88,13 +80,11 @@ const createCitaGET = async (req = request, res = response) => {
         const doct = await Doctor.find({ '_id': doctor });
         const patient = await Patient.find({});
         const fecha = new Date(date.split('T')[0]);
-        const citas = await Cita.find({
-            "doctor._id": doctor, state: true,
-            datetime: { $gte: fecha.toISOString(), $lt: new Date(fecha.getTime() + 1440 * 60000).toISOString() }
-        });
-        const horario = await horarioDisponible(fecha, citas);
+      
 
-        res.json(
+        const horario = await horarioDisponible(fecha, doctor);
+        
+       res.json(
             {
                 ok: 200,
                 patients: patient,
@@ -102,7 +92,7 @@ const createCitaGET = async (req = request, res = response) => {
                 horario: horario
             }
         );
-        //res.render("createCita", {  patients: patient,doct: doct[0], horario: horario });
+       //res.render("createCita", {  patients: patient,doct: doct[0], horario: horario });
     } catch (error) {
         console.log(error);
     }
@@ -111,19 +101,20 @@ const createCitaGET = async (req = request, res = response) => {
 
 const saveCitaPOST = async (req = request, res = response) => {
     try {
-        let { id_Patient, horario, idDoctor } = req.body;
-        let doctor = await Doctor.find({ '_id': idDoctor });
-        let patient = await Patient.find({ '_id': id_Patient });
+        let { patient_id, date, doctor_id } = req.body;
+        let doctor = await Doctor.find({ '_id': doctor_id });
+        let patient = await Patient.find({ '_id': patient_id });
         patient = patient[0];
         doctor = doctor[0];
-        datetime = new Date(horario);
-        const cita = new Cita({ patient, datetime, doctor });
+        user=req.user;
+        datetime = new Date(date);
+        const cita = new Appointment({ patient, datetime, doctor,user});
         await cita.save();
-        res.json({
-            ok:200,
+       res.json({
+            ok: 200,
             cita
-        })
-        // res.redirect('/api/citas');
+        });
+       // res.redirect('/api/citas');
     } catch (error) {
         console.log(error);
     }
@@ -132,13 +123,14 @@ const saveCitaPOST = async (req = request, res = response) => {
 const deteleCita = async (req = request, res = response) => {
     try {
         const { id } = req.params;
-        const cita = await Cita.findByIdAndUpdate(id, { 'estado': false });
+        const cita = await Appointment.findByIdAndUpdate(id, { 'estado': false });
         res.json({
             ok: 200,
             msg: "Mensaje desde el metodo Delete",
             cita,
-          });
-        //  res.redirect('/api/citas');
+        });
+
+         // res.redirect('/api/citas');
     }
     catch (err) {
         console.log(err);

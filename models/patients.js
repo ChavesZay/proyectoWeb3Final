@@ -14,6 +14,10 @@ const SchemaPatient = new Schema({
         type: String,
         required: [true,"La identificación es obligatoria"]
     },
+    phone:{
+        type: Number,
+        required: [true,"El número es obligatorio"]
+    },
     weight: {
         type: Number,
         required: [true,"El peso es obligatorio"]

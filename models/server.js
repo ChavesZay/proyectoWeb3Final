@@ -29,6 +29,7 @@ class Server {
     routes() {
         this.app.use(this.userPath, require('../routes/users.js'))
         this.app.use(this.citaPath, require('../routes/citas.js'))
+        this.app.use(this.authPath, require('../routes/auth.js'))
     }
 
     middleWares() {
