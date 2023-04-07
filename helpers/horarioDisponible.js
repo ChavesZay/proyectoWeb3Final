@@ -10,7 +10,7 @@ const horarioDisponible= async(date,doctor)=>{
     var horarioO = [];
 
     const citas = await Appointment.find({
-        $and: [{ 'estado': true }, { 'doctor._id': doctor }, { datetime: { $gte: fecha } },
+        $and: [{ 'state': true }, { 'doctor._id': doctor }, { datetime: { $gte: fecha } },
         { datetime: { $lt: new Date(fecha.getTime() + 1440 * 60000) } }]
     }, { datetime: 1, _id: 0 });
     

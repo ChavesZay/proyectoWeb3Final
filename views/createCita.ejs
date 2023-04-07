@@ -10,6 +10,7 @@
     <h1>Crear Cita</h1>
     <form id="cita-form" action="/api/citas/createCita" method="POST">
         <h2>Información de la Cita</h2>
+
         <label for="id_Patient">Paciente:</label>
         <select name="patient_id" required>
             <option value="">Seleccionar</option>
@@ -17,6 +18,9 @@
                 <option value=<%=patient._id%> > <%=patient.name%> </option>
             <% }) %>
         </select>
+
+
+
         <label for="horario">Horario:</label>
         <select name="date" required>
             <option value="">Seleccionar</option>

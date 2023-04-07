@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-
 const SchemaAppointment= new Schema({
     patient: {
         name: {
@@ -12,15 +11,14 @@ const SchemaAppointment= new Schema({
             required: true
         },
         phone: {
-            type: Number,
+            type: String,
+            required: true
         }
-      
     },
     datetime: {
         type: Date,
         require: true
     },
-    
     doctor: {
         _id: { type: String },
         name: { type: String },
@@ -34,7 +32,6 @@ const SchemaAppointment= new Schema({
         type: String,
         required: true
     }
-
 });
 
 module.exports = model('appointment', SchemaAppointment);

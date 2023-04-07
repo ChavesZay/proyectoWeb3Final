@@ -25,7 +25,6 @@ google:{
 role:{
     type:String,
     default:"public",
-    required:[true,'El campo rol es requerido']
 },
 state:{
     type:Boolean,

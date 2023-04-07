@@ -3,6 +3,15 @@ const Usuario = require('../models/users.js');
 var bcrypt = require('bcryptjs');
 const generarJWT =require('../helpers/generarJWT.js')
 
+const loginView = async (req = request, res = response) => {
+    try {
+      
+      res.render("login");
+    } catch (err) {
+      console.log(err);
+      throw new Error("Error en el metodo GET");
+    }
+  };
 
 const login = async (req = request, res = response) => {
     const { email, password } = req.body;
@@ -35,4 +44,4 @@ const login = async (req = request, res = response) => {
     })
 }
 
-module.exports = { login }
+module.exports = { login,loginView }

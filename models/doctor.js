@@ -14,7 +14,7 @@ user:{
 
 speciality:{
     type:String,
-    default:" "
+    default:"Medicina General"
 },
 state:{
     type:Boolean,

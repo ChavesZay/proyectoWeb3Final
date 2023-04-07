@@ -3,24 +3,34 @@ const Usuario = require('../models/users');
 const Doctor=require('../models/doctor.js')
 var bcrypt = require('bcryptjs');
 
-
-const usersGET = async (req = request, res = response) => {
-
+const usersGETPOST = async (req = request, res = response) => {
     try {
+      const users = await Usuario.find({ 'state': true });
+      res.status(200).json({
+        msg: "Mensaje desde el metodo GET de usuarios",
+        users,
+      });
+    } catch (err) {
+      console.log(err);
+      throw new Error("Error en el metodo GET");
+    }
+  };
+  
+  const usersGET = async (req = request, res = response) => {
+    try {
+      // const rol = { rol: "public", google: true };
+      //const {limit}=req.query;
+      const users = await Usuario.find({ 'state': true });
+      res.render("users", { users });
+    } catch (err) {
+      console.log(err);
+      throw new Error("Error en el metodo GET");
+    }
+  };
 
-        const users = await Usuario.find({ 'state': true });
-        res.status(200).json(
-            {
-                "msg": "Mensaje desde el metodo GET",
-                users
-            }
-        );
-    }
-    catch (err) {
-        console.log(err);
-        throw new Error('Error en el metodo GET');
-    }
-}
+  
+
+
 
 const usersPOST = async (req = request, res = response) => {
 
@@ -56,14 +66,15 @@ const usersPUT = async (req = request, res = response) => {
             resto.password = bcrypt.hashSync(password, salt);
         }
         const users = await Usuario.findByIdAndUpdate(id, resto);
-       console.log(users)
-        if(users.role.toLowerCase()='medico'){
+
+        if(users.role.toLowerCase()=='medico'){
             const user=users._id;
-            const speciality=req.body.speciality;
-            console.log(name)
+            const name=users.name
+            const speciality= req.body.speciality? req.body.speciality:"Medicina General";
             const doctors= new Doctor({name,user,speciality});
             await doctors.save();
         }
+
         res.json(
             {
                 ok: 200,
@@ -105,5 +116,6 @@ module.exports = {
     usersGET,
     usersPOST,
     usersPUT,
-    usersDELETE
+    usersDELETE,
+    usersGETPOST
 }

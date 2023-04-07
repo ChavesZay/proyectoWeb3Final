@@ -7,12 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 </head>
 
 <body>
   <h1>Agregar Cita</h1>
-  <form name="form-fechaCita"  action="/api/citas/horarios" method="post">
+  <form name="form-fechaCita" action="/api/citas/horarios" method="post">
     <label for="date">Fecha:</label>
     <input type="date" id="date" name="date" required>
 
@@ -20,7 +19,6 @@
     <select name="doctor" id="doctor" required>
       <option value="">Seleccionar</option>
       <%doctors.forEach((doctor)=>{ %>
-
         <option value=<%=doctor._id%> > <%=doctor.name+" ---"+doctor.speciality+"" %>
         </option>
         <% }) %>
@@ -29,7 +27,6 @@
     <div><input type="submit" name="bnEnviar" id="bnEnviar" value="Crear Cita"></div>
 
   </form>
-
 
   <table>
     <tr>
@@ -55,33 +52,37 @@
         <td>
           <%=cita.doctor.name%>
         </td>
-
         <td>
           <a href="cancelarCita/cita._id">Eliminar</a>
         </td>
       </tr>
       <% }) %>
   </table>
-
-
-  <!--<script>
+<!--
+  <script>
     const frutas = () =>
       axios.get("https://app-citas-node.onrender.com/api/citas", {
         responseType: "json",
       })
         .then((result) => {
+          console.log(result);
           const { data } = result;
           const { doctors } = data;
-          const divRow = document.querySelector(".row.row-cols-1.row-cols-md-3");
+
           const select = document.getElementById("doctor");
-          doctors.forEach((doctor) => {
-            const option = document.createElement("option");
-            option.value = doctor._id;
-            option.text = doctor.name;
-            select.appendChild(option);
-          })
+          mostrarDoctores(select, doctors);
         });
 
+
+
+    function mostrarDoctores(select, doctors) {
+      let elementos = '  <option selected disabled>Seleccionar</option>'
+
+      doctors.forEach(doctor => {
+        elementos += '<option value="' + doctor._id + '">' + doctor.name + " ---" + doctor.speciality + '</option>'
+      });
+      select.innerHTML = elementos
+    }
 
     frutas();
   </script>-->
