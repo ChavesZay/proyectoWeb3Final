@@ -2,14 +2,8 @@ const { Schema, model } = require('mongoose');
 
 const SchemaConsult = new Schema({
     patient: {
-        name: {
-            type: String,
-            required: true
-        },
-        dni: {
-            type: String,
-            required: true
-        }
+        name: { type: String, required: true},
+        dni: {type: String,required: true}
     },
     height: {
         type: String,
@@ -36,19 +30,10 @@ const SchemaConsult = new Schema({
         type: Array,
         default:[]
     },
-    test:[
-        {
-            testCategory: {
-                type: String,
-                default:""
-
-            },
-            testType: {
-                type: Array,
-                default:null
-            }
-        }
-    ],
+    test:[ {
+            testCategory: {type: String,default:"" },
+            testType: {type: Array, default:null}
+        }],
     state:{
         type: Boolean,
         default:true

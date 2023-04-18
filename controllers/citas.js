@@ -81,7 +81,7 @@ const createCitaGET = async (req = request, res = response) => {
             {
                 ok: 200,
                 patients: patient,
-                doct: doct[0],
+                doctor: doct[0],
                 horario: horario
             }
         );

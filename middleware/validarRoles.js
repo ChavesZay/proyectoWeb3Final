@@ -5,7 +5,7 @@ const Appointment = require('../models/appointment.js')
 
 //Valida que sea un rol autorizado y que el rol public solo aplique una cita
 const validarRolCita = async (req = request, res = response, next) => {
-    const token = req.header('auth');
+    const token = req.header('token');
     try {
         const roles = ['recepcionista', 'public', 'admin'];
         const payload = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
@@ -40,7 +40,7 @@ const validarRolCita = async (req = request, res = response, next) => {
 
 
 const validarRolDelete = async (req = request, res = response, next) => {
-    const token = req.header('auth');
+    const token = req.header('token');
     try {
         const roles = ['recepcionista', 'admin'];
         const payload = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
@@ -63,8 +63,8 @@ const validarRolDelete = async (req = request, res = response, next) => {
 }
 
 
-const validarRolConsulta = async (req = request, res = response, next) => {
-    const token = req.header('auth');
+const validarRolMedicoAdmin = async (req = request, res = response, next) => {
+    const token = req.header('token');
     try {
         const roles = ['medico', 'enfermera', 'admin'];
         const payload = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
@@ -73,7 +73,31 @@ const validarRolConsulta = async (req = request, res = response, next) => {
         if (!roles.includes(user.role.toLowerCase())) {
             return res.status(400).json({
                 ok: false,
-                msg: 'No tienes permiso de acceso al modulo de consultas',
+                msg: 'No tienes permiso de acceso a este modulo',
+                user
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error de rol'
+        })
+    }
+    next();
+}
+
+const validarRolUser = async (req = request, res = response, next) => {
+    const token = req.header('token');
+    try {
+        const roles = ['admin'];
+        const payload = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const { id } = payload;
+        const user = await User.findById(id);
+        if (!roles.includes(user.role.toLowerCase())) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tienes permiso de acceso a modificar o eliminar los usuarios',
                 user
             })
         }
@@ -90,5 +114,6 @@ const validarRolConsulta = async (req = request, res = response, next) => {
 module.exports = {
     validarRolCita,
     validarRolDelete,
-    validarRolConsulta
+    validarRolMedicoAdmin,
+    validarRolUser
 }

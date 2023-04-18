@@ -4,12 +4,15 @@ const { request, response } = require("express");
 const validarTest = async (req = request, res = response, next) => {
     try {
         const {testCategory } = req.body;
+        const test = ['sangre', 'orina'];
+
         if (testCategory) {
             testCategory.forEach(element => {
-                if(element.toLowerCase()!="sangre"&&element.toLowerCase()!="orina"){
+                if (!test.includes(element.toLowerCase())) {
                     return res.status(400).json({
                         ok: false,
-                        msg: 'El tipo de test enviado no existe'
+                        msg: 'El tipo de examen no es valido',
+                        element
                     })
                 }
             });

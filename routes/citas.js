@@ -41,8 +41,7 @@ router.get("/createCita/:doctor", [
     check('date', 'La fecha es obligatoria').not().isEmpty(),
     validate_fields],createCitaGET);
 
-//eliminar no se ocupa
-router.post('/horarios', citasHorarioPOST);
+
 
 //manda los datos de la cita
 router.post('/createCita', [
