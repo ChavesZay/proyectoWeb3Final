@@ -34,7 +34,7 @@ router.post(
       min: 0,
       max: 150,
     }),
-    check("height", "La altura debe tener un formato válido").matches(
+    check("height", "La altura debe tener un formato válido (cm/m)").matches(
       /^(\d+)(cm|m)$/
     ),
     check(

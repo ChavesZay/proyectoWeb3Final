@@ -111,6 +111,8 @@ const validarRolUser = async (req = request, res = response, next) => {
 }
 
 
+
+
 module.exports = {
     validarRolCita,
     validarRolDelete,

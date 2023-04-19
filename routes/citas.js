@@ -11,7 +11,6 @@ const{validarEstadoCita}=require('../middleware/validarEstadoCita.js')
 
 const {
     citasGET,
-    citasHorarioPOST,
     horariosGet,
     createCitaGET,
     saveCitaPOST,

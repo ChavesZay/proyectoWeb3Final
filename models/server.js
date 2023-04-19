@@ -14,7 +14,9 @@ class Server {
         this.citaPath = '/api/appointments';
         this.patientsPath = "/api/patients";
         this.consultPath = '/api/consults';
-       
+        this.testsPath = '/api/tests';//nuevo
+
+
         this.middleWares();
         this.routes();
         this.conectarMongo();
@@ -35,6 +37,8 @@ class Server {
         this.app.use(this.authPath, require('../routes/auth.js'))
         this.app.use(this.consultPath, require('../routes/consult.js'))
         this.app.use(this.patientsPath, require('../routes/patients.js'))
+        this.app.use(this.testsPath, require('../routes/tests.js'))
+
     }
 
     middleWares() {
