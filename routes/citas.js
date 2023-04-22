@@ -24,10 +24,10 @@ router.get('/', [
     validarRolCita],
      citasGET);
 
-     router.get('/doctores', [
+     router.get('/doctors', [
         validarJWT, 
         validarRolCita],
-         doctorsCitasGET);
+        doctorsCitasGET);
 
 //lista de horarios Disponibles
 router.get('/listHorarios/:doctor',[
