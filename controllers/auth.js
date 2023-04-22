@@ -47,7 +47,7 @@ const googleSingIn = async (req = request, res = response) => {
   
       //Tercer paso desestructurar y grabar en nuestra aplicacion
       //el usuario que se logueo en google
-      const { name, email, picture } = googleUser;
+      const { name, email} = googleUser;
   
       //Cuarto paso Generar la referencia para saber si el usuario ya existe
   
@@ -60,7 +60,7 @@ const googleSingIn = async (req = request, res = response) => {
           //El hash se le delega a google
           password: "p",
           google: true,
-          rol: "ADMIN",
+          role: "public",
         };
         usuario = new Usuario(data);
         await usuario.save();
@@ -69,6 +69,7 @@ const googleSingIn = async (req = request, res = response) => {
       //Generamos el JsonWebToken
       const token = await GenerarJWT(usuario.id);
   
+      const rol=usuario.role;
       //Configuramos la salida
       res.status(200).json({
         msg: "Todo bien desde googleSignIn",
@@ -78,8 +79,9 @@ const googleSingIn = async (req = request, res = response) => {
            id_token,
            googleUser
           */
-        usuario,
-        token,
+        email,
+        rol,
+        token
       });
   
       console.log("Creacion correcta del usuario en google");
