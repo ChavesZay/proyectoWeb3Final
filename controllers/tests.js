@@ -4,7 +4,7 @@ const Consult = require('../models/consults.js');
 const obtenerTestId = async (req = request, res = response) => {
     try {
         const { id } = req.params;
-        const test = await Consult.findById(id, { 'test': 1, '_id': 0 });
+        const test = await Consult.findById(id, { 'test': 1, '_id': 1 });
         res.json(
             {
                 ok: 200,

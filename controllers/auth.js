@@ -9,6 +9,7 @@ const login = async (req = request, res = response) => {
     const { email, password } = req.body;
 
     const user = await Usuario.findOne({ email });
+    const rol=user.role;
     if (!user) {
         return res.status(400).json({
             ok: false,
@@ -32,7 +33,8 @@ const login = async (req = request, res = response) => {
         msg: "Estoy desde el login",
         email,
         password, 
-        token
+        token,
+        rol
     })
 }
 

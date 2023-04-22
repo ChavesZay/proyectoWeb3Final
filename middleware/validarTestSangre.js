@@ -6,14 +6,16 @@ const validarTestSangre = async (req = request, res = response, next) => {
         const { id } = req.params;
         const testsSangre = ['hemoglobina', 'hematocrito', 'trigliceridos', 'colesterol total', 'acido urico', 'creatinina']
         const tests = await Consult.findById(id, { 'test': 1, '_id': 0 });
-        const examenes = req.body
-        let examenesArray = examenes.testType.filter(ai => testsSangre.includes(ai.trim().toLowerCase()));
-        if (examenesArray.length !== examenes.testType.length) {
+        const examenes = req.body.testType || {};
+        const examenesArray = Object.keys(examenes).filter(e => testsSangre.includes(e.trim().toLowerCase()));
+
+        if (examenesArray.length !== Object.keys(examenes).length) {
             return res.status(400).json({
                 ok: false,
                 msg: "Error! Se encontraron examenes que no son de sangre"
             });
         }
+
         if (tests.test.length === 1) {
             if (tests.test[0].testCategory.toLocaleLowerCase() !== "sangre") {
                 return res.status(400).json({

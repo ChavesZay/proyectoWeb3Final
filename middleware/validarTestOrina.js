@@ -6,9 +6,9 @@ const validarTestOrina = async (req = request, res = response, next) => {
         const { id } = req.params;
         const testsOrina = ['glucosa', 'eritrocitos', 'color', 'leucocitos']
         const tests = await Consult.findById(id, { 'test': 1, '_id': 0 });
-        const examenes = req.body
-        let examenesArray = examenes.testType.filter(ai => testsOrina.includes(ai.trim().toLowerCase()));
-        if (examenesArray.length !== examenes.testType.length) {
+        const examenes = req.body.testType || {};
+        const examenesArray = Object.keys(examenes).filter(e => testsOrina.includes(e.trim().toLowerCase()));
+        if (examenesArray.length !== Object.keys(examenes).length) {
             return res.status(400).json({
                 ok: false,
                 msg: "Error! Se encontraron examenes que no son de sangre"
