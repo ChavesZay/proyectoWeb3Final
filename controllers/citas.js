@@ -9,11 +9,9 @@ const { horarioDisponible } = require('../helpers/horarioDisponible')
 const citasGET = async (req = request, res = response) => {
     try {
         const citas = await Appointment.find({ 'state': true });
-        const doctors = await Doctor.find({ 'state': true });
         res.json(
             {
                 ok: 200,
-                doctors,
                 citas
             }
         );
@@ -22,6 +20,22 @@ const citasGET = async (req = request, res = response) => {
         throw new Error('Error en el metodo GET de citas');
     }
 }
+
+const doctorsCitasGET = async (req = request, res = response) => {
+    try {
+        const doctors = await Doctor.find({ 'state': true });
+        res.json(
+            {
+                ok: 200,
+                doctors
+            }
+        );
+    
+    } catch (error) {
+        throw new Error('Error en el metodo GET de doctores');
+    }
+}
+
 
 //Eliminar no se ocupa
 const citasHorarioPOST = async (req = request, res = response) => {
@@ -138,5 +152,6 @@ module.exports = {
     horariosGet,
     createCitaGET,
     saveCitaPOST,
-    deteleCita
+    deteleCita,
+    doctorsCitasGET
 }

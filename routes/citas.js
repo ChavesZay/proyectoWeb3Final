@@ -14,7 +14,8 @@ const {
     horariosGet,
     createCitaGET,
     saveCitaPOST,
-    deteleCita
+    deteleCita,
+    doctorsCitasGET
 } = require('../controllers/citas.js');
 
 //lista de citas y elegir fecha y doctor para una cita
@@ -22,6 +23,11 @@ router.get('/', [
     validarJWT, 
     validarRolCita],
      citasGET);
+
+     router.get('/doctores', [
+        validarJWT, 
+        validarRolCita],
+         doctorsCitasGET);
 
 //lista de horarios Disponibles
 router.get('/listHorarios/:doctor',[
