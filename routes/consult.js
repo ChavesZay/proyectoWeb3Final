@@ -45,7 +45,6 @@ router.post("/", [
 router.put("/:id", [
     validarJWT,
     validarRolMedicoAdmin,
-    validarTest,
     check('id', 'ID no es valido de mongo').isMongoId(),
     validate_fields],
     consultPUT);
@@ -53,7 +52,6 @@ router.put("/:id", [
 router.put("/agregarDiagnostico/:id", [
     validarJWT,
     validarRolMedicoAdmin,
-    validarTest,
     check('diagnosis', 'El diagnostico del paciente es obligatorio').not().isEmpty(),
     check('medicines', 'Las medicinas recetadas del paciente es obligatorio').not().isEmpty(),
     check('id', 'ID no es valido de mongo').isMongoId(),

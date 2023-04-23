@@ -7,7 +7,7 @@ const validarTest = async (req = request, res = response, next) => {
         const test = ['sangre', 'orina'];
 
         if (testCategory) {
-            testCategory.forEach(element => {
+          await  testCategory.forEach(element => {
                 if (!test.includes(element.toLowerCase())) {
                     return res.status(400).json({
                         ok: false,

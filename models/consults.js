@@ -16,7 +16,6 @@ const SchemaConsult = new Schema({
     weight: {
         type: String,
         required: [true, "El peso es obligatoria"]
-
     },
     pressure: {
         type: Number,
@@ -30,10 +29,8 @@ const SchemaConsult = new Schema({
         type: Array,
         default:[]
     },
-    test:[ {
-            testCategory: {type: String,default:"" },
-            testType: {type: Object, default:null}
-        }],
+    test:[ {testCategory: {type: String,default:"" },
+    testType: {type: Object, default:null} }],
     state:{
         type: Boolean,
         default:true
