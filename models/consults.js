@@ -32,7 +32,7 @@ const SchemaConsult = new Schema({
     },
     test:[ {
             testCategory: {type: String,default:"" },
-            testType: {type: Array, default:null}
+            testType: {type: Object, default:null}
         }],
     state:{
         type: Boolean,
