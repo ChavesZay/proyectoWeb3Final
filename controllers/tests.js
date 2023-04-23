@@ -39,6 +39,7 @@ const actualizarTestOrina = async (req = request, res = response) => {
         const examenes = req.body
         const newConsult = await Consult.findByIdAndUpdate(id, { $set: { "test.$[elem].testType": examenes.testType } },
             { arrayFilters: [{ "elem.testCategory": "Orina" }], new: true });
+            
         res.json(
             {
                 ok: 200,
