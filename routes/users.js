@@ -16,7 +16,7 @@ const { usersGET,
 
 const router = Router();
 
-router.get("/", usersGET);
+router.get("/",[validarJWT,validarRolUser], usersGET);
 
 router.get("/:id", [
     validarJWT,
