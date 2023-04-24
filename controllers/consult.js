@@ -18,6 +18,21 @@ const consultGET = async (req = request, res = response) => {
         throw new Error('Error en el metodo GET de consultas');
     }
 }
+
+const consultGETById = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+        const consult = await Consult.find({'state': true,'_id':id });
+        res.json(
+            {
+                ok: 200,
+                consult
+            }
+        );
+    } catch (error) {
+        throw new Error('Error en el metodo GET de consultas');
+    }
+}
 //Lista de consultas con diagnostico
 const completConsulstGET = async (req = request, res = response) => {
     try {
@@ -136,6 +151,7 @@ const consultDELETE = async (req = request, res = response) => {
 
 module.exports = {
     consultGET,
+    consultGETById,
     consultPOST,
     consultPUT,
     consultDELETE,

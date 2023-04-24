@@ -10,6 +10,7 @@ const { validarTest } = require('../middleware/validarTest.js')
 const router = Router();
 
 const { consultGET,
+    consultGETById,
     consultPOST,
     consultPUT,
     consultDELETE,
@@ -21,6 +22,12 @@ router.get("/", [
     validarJWT,
     validarRolMedicoAdmin],
     consultGET);
+
+router.get("/:id", [
+    validarJWT,
+    validarRolMedicoAdmin],
+    consultGETById);
+
 
 router.get("/completConsult", [
     validarJWT,
@@ -40,7 +47,7 @@ router.post("/", [
     check('height', 'La altura del paciente es obligatorio').not().isEmpty(),
     check('pressure', 'La presión del paciente es obligatorio').not().isEmpty(),
     check('symptoms', 'Los sintomas del paciente es obligatorio').not().isEmpty(),
-    validate_fields,validarPaciente,], consultPOST);
+    validate_fields, validarPaciente,], consultPOST);
 
 router.put("/:id", [
     validarJWT,

@@ -21,6 +21,22 @@ const citasGET = async (req = request, res = response) => {
     }
 }
 
+const citasGETById = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+        const cita = await Appointment.find({ 'state': true,'_id':id });
+        res.json(
+            {
+                ok: 200,
+                cita
+            }
+        );
+    
+    } catch (error) {
+        throw new Error('Error en el metodo GET de citas');
+    }
+}
+
 const doctorsCitasGET = async (req = request, res = response) => {
     try {
         const doctors = await Doctor.find({ 'state': true });
@@ -153,5 +169,6 @@ module.exports = {
     createCitaGET,
     saveCitaPOST,
     deteleCita,
-    doctorsCitasGET
+    doctorsCitasGET,
+    citasGETById
 }

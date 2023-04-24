@@ -4,7 +4,7 @@ var bcrypt = require("bcryptjs");
 
 
 
-const patientsGETPOST = async (req = request, res = response) => {
+const patientsGET = async (req = request, res = response) => {
   try {
     const patients = await Paciente.find({"state":true});
     res.status(200).json({
@@ -17,12 +17,16 @@ const patientsGETPOST = async (req = request, res = response) => {
   }
 };
 
-const patientsGET = async (req = request, res = response) => {
+
+
+const patientsGETById = async (req = request, res = response) => {
   try {
-    // const rol = { rol: "public", google: true };
-    //const {limit}=req.query;
-    const patients = await Paciente.find({"state":true});
-    res.render("patients", { patients });
+    const { id } = req.params;
+    const patient = await Paciente.find({"state":true,'_id':id});
+    res.status(200).json({
+      msg: "Mensaje desde el metodo GET",
+      patient
+    });
   } catch (err) {
     console.log(err);
     throw new Error("Error en el metodo GET");
@@ -113,7 +117,7 @@ const patientsDELETE = async (req = request, res = response) => {
 
 module.exports = {
   patientsGET,
-  patientsGETPOST,
+  patientsGETById,
   patientsPOST,
   patientsPUT,
   patientsDELETE,

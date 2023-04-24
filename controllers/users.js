@@ -3,7 +3,7 @@ const Usuario = require('../models/users');
 const Doctor=require('../models/doctor.js')
 var bcrypt = require('bcryptjs');
 
-const usersGETPOST = async (req = request, res = response) => {
+const usersGET = async (req = request, res = response) => {
     try {
       const users = await Usuario.find({ 'state': true });
       res.status(200).json({
@@ -16,17 +16,22 @@ const usersGETPOST = async (req = request, res = response) => {
     }
   };
   
-  const usersGET = async (req = request, res = response) => {
+
+
+  const usersGETById = async (req = request, res = response) => {
     try {
-      // const rol = { rol: "public", google: true };
-      //const {limit}=req.query;
-      const users = await Usuario.find({ 'state': true });
-      res.render("users", { users });
+        const { id } = req.params;
+      const user = await Usuario.find({ 'state': true, '_id':id });
+      res.status(200).json({
+        msg: "Mensaje desde el metodo GET de usuarios",
+        user
+      });
     } catch (err) {
       console.log(err);
       throw new Error("Error en el metodo GET");
     }
   };
+  
 
   
 
@@ -125,5 +130,5 @@ module.exports = {
     usersPOST,
     usersPUT,
     usersDELETE,
-    usersGETPOST
+    usersGETById
 }

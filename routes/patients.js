@@ -7,7 +7,7 @@ const { validarJWT } = require("../middleware/validateJWT");
 const { db_ExistDNI } = require("../middleware/validarPaciente");
 const {
   patientsGET,
-  patientsGETPOST,
+  patientsGETById,
   patientsPOST,
   patientsPUT,
   patientsDELETE,
@@ -16,8 +16,10 @@ const {
 const router = Router();
 
 
-router.get("/", [validarJWT], patientsGETPOST);
-router.get("/usuarios", [validarJWT], patientsGET);
+router.get("/", [validarJWT], patientsGET);
+
+router.get("/:id", [validarJWT], patientsGETById);
+
 
 router.post(
   "/",
