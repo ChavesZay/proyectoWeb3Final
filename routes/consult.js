@@ -25,7 +25,9 @@ router.get("/", [
 
 router.get("/:id", [
     validarJWT,
-    validarRolMedicoAdmin],
+    validarRolMedicoAdmin,
+    check('id', 'El ID no es valido de una consulta').isMongoId(),
+    validate_fields],
     consultGETById);
 
 

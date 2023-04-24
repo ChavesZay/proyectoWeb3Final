@@ -16,9 +16,14 @@ const {
 const router = Router();
 
 
-router.get("/", [validarJWT], patientsGET);
+router.get("/", [validarJWT,  validarRolMedicoAdmin], patientsGET);
 
-router.get("/:id", [validarJWT], patientsGETById);
+router.get("/:id", [
+  validarJWT,
+  validarRolMedicoAdmin,
+  check('id', 'El ID no es valido de un paciente').isMongoId(),
+  validate_fields
+], patientsGETById);
 
 
 router.post(
@@ -76,9 +81,18 @@ router.post(
   patientsPOST
 );
 
-router.put("/:id", [validarJWT,validarRolMedicoAdmin], patientsPUT);
+router.put("/:id", [
+  validarJWT,
+  validarRolMedicoAdmin,
+  check('id', 'El ID no es valido de un paciente').isMongoId(),
+validate_fields],
+ patientsPUT);
 
-router.delete("/:id",[validarJWT,validarRolMedicoAdmin], patientsDELETE);
+router.delete("/:id",[
+  validarJWT,
+  validarRolMedicoAdmin,
+  check('id', 'El ID no es valido de un paciente').isMongoId(),
+  validate_fields], patientsDELETE);
 
 module.exports = router;
 

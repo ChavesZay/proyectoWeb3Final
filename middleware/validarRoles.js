@@ -66,7 +66,7 @@ const validarRolDelete = async (req = request, res = response, next) => {
 const validarRolMedicoAdmin = async (req = request, res = response, next) => {
     const token = req.header('token');
     try {
-        const roles = ['medico', 'enfermera', 'admin'];
+        const roles = ['medico', 'admin'];
         const payload = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         const { id } = payload;
         const user = await User.findById(id);

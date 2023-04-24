@@ -27,7 +27,9 @@ router.get('/', [
 
 router.get('/:id', [
     validarJWT,
-    validarRolCita],
+    validarRolCita,
+    check('id', 'El ID no es valido de una cita').isMongoId(),
+    validate_fields],
     citasGETById);
 
 router.get('/doctors', [

@@ -17,7 +17,14 @@ const { usersGET,
 const router = Router();
 
 router.get("/", usersGET);
-router.get("/:id", usersGETById);
+
+router.get("/:id", [
+    validarJWT,
+    validarRolUser,
+    check('id', 'El ID no es valido de un usuario').isMongoId(),
+    validate_fields],
+    usersGETById);
+
 
 router.post(
     "/",
