@@ -5,6 +5,7 @@ const { validarJWT } = require("../middleware/validateJWT");
 const {validarRolMedicoAdmin } = require('../middleware/validarRoles.js')
 const { validarTestOrina } = require('../middleware/validarTestOrina.js')
 const { validarTestSangre } = require('../middleware/validarTestSangre.js')
+const {validarEstadoConsult } = require('../middleware/validarEstados.js')
 
 const router = Router();
 
@@ -16,44 +17,50 @@ const { obtenerTestId,
     elimianarTestSangre } = require('../controllers/tests.js');
 
 router.get("/:id",[
-    validarJWT,
     check("id", "ID no valido en mongo").isMongoId(),
+    validate_fields,
+    validarJWT,
     validarRolMedicoAdmin,
+    validarEstadoConsult
 ],obtenerTestId);
 
 router.get("/",[
     validarJWT,
-    validarRolMedicoAdmin,
+    validarRolMedicoAdmin
 ],obtenerListTests);
 
 router.post("/updateTestOrina/:id", [
+    check("id", "ID no valido en mongo").isMongoId(),
+    validate_fields,
     validarJWT,
     validarRolMedicoAdmin,
-    validarTestOrina,
-    check("id", "ID no valido en mongo").isMongoId(),
-    validate_fields
+    validarEstadoConsult,
+    validarTestOrina
 ],actualizarTestOrina);
 
 router.post("/updateTestSangre/:id", [
+    check("id", "ID no valido en mongo").isMongoId(),
+    validate_fields,
     validarJWT,
     validarRolMedicoAdmin,
-    validarTestSangre,
-    check("id", "ID no valido en mongo").isMongoId(),
-    validate_fields
+    validarEstadoConsult,
+    validarTestSangre
 ],actualizarTestSangre);
 
 router.post("/delTestOrina/:id", [
+    check("id", "ID no valido en mongo").isMongoId(),
+    validate_fields,
     validarJWT,
     validarRolMedicoAdmin,
-    check("id", "ID no valido en mongo").isMongoId(),
-    validate_fields
+    validarEstadoConsult
 ],elimianarTestOrina);
 
 router.post("/delTestSangre/:id",[
+    check("id", "ID no valido en mongo").isMongoId(),
+    validate_fields,
     validarJWT,
     validarRolMedicoAdmin,
-    check("id", "ID no valido en mongo").isMongoId(),
-    validate_fields
+    validarEstadoConsult
 ],elimianarTestSangre);
 
 module.exports = router;

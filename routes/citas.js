@@ -5,7 +5,7 @@ const { validarHorario, validarHora } = require('../middleware/validarHorario.js
 const router = Router();
 const { validarJWT } = require('../middleware/validateJWT.js')
 const { validarRolCita, validarRolDelete } = require('../middleware/validarRoles.js')
-const { validarFecha } = require('../middleware/validarFecha.js')
+const { validarFecha, validarFechaQuerry } = require('../middleware/validarFecha.js')
 const { validarDoctor, validarPaciente } = require('../middleware/validarPersonas.js')
 const { validarEstadoCita } = require('../middleware/validarEstadoCita.js')
 
@@ -25,7 +25,7 @@ router.get('/', [
     validarRolCita],
     citasGET);
 
-router.get('/:id', [
+router.get('/one/:id', [
     validarJWT,
     validarRolCita,
     check('id', 'El ID no es valido de una cita').isMongoId(),
@@ -41,6 +41,7 @@ router.get('/doctors', [
 router.get('/listHorarios/:doctor', [
     validarJWT,
     validarRolCita,
+    validarFechaQuerry,
     check('doctor', 'ID del doctor no es valido de mongo').isMongoId(),
     check('date', 'La fecha es obligatoria').not().isEmpty(),
     validate_fields],

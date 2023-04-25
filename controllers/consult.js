@@ -138,15 +138,29 @@ const consultPUT = async (req = request, res = response) => {
 
 //Elimina la consulta cambiando el estado a false
 const consultDELETE = async (req = request, res = response) => {
-    const { id } = req.params;
+    try {
+        
+        const { id } = req.params;
         const consulta = await Consult.findByIdAndUpdate(id,{ 'state': false });
-        let patient = await Patient.findOneAndUpdate({ dni: consulta.patient.dni }, { $pull:{ pressure: consulta.pressure, weight:consulta.weight }});
+        if(consulta){
+            let patient = await Patient.findOneAndUpdate({ dni: consulta.patient.dni }, { $pull:{ pressure: consulta.pressure, weight:consulta.weight }});
+
+        }
        
         res.json({
             ok: 200,
             msg: "Mensaje desde el metodo Delete",
             consulta
         })
+
+    } catch (error) {
+        res.json({
+            ok: 400,
+            msg: "Error desde el metodo Delete"
+        })
+        
+    }
+   
 }
 
 module.exports = {

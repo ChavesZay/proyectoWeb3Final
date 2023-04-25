@@ -4,7 +4,7 @@ const { validate_fields } = require('../middleware/validation-field.js');
 const { check } = require('express-validator');
 const { validarRolMedicoAdmin } = require('../middleware/validarRoles.js')
 const { validarPaciente } = require('../middleware/validarPersonas.js')
-const { validarEstadoConsult } = require('../middleware/validarEstadoConsult.js')
+const { validarEstadoConsult } = require('../middleware/validarEstados.js')
 const { validarTest } = require('../middleware/validarTest.js')
 
 const router = Router();
@@ -23,7 +23,7 @@ router.get("/", [
     validarRolMedicoAdmin],
     consultGET);
 
-router.get("/:id", [
+router.get("/one/:id", [
     validarJWT,
     validarRolMedicoAdmin,
     check('id', 'El ID no es valido de una consulta').isMongoId(),
@@ -46,8 +46,15 @@ router.post("/", [
     validarRolMedicoAdmin,
     check('dni', 'El dni del paciente es obligatorio').not().isEmpty(),
     check('weight', 'El peso del paciente es obligatorio').not().isEmpty(),
+    check("weight", "El peso debe tener un formato válido (g/kg)").matches(
+        /^(\d+)(kg|g)$/
+      ),
+    check("height", "La altura debe tener un formato válido (cm/m)").matches(
+        /^(\d+)(cm|m)$/
+      ),
     check('height', 'La altura del paciente es obligatorio').not().isEmpty(),
     check('pressure', 'La presión del paciente es obligatorio').not().isEmpty(),
+    check('pressure', 'La presión del paciente es en formato de número').isInt(),
     check('symptoms', 'Los sintomas del paciente es obligatorio').not().isEmpty(),
     validate_fields, validarPaciente,], consultPOST);
 
@@ -61,6 +68,7 @@ router.put("/:id", [
 router.put("/agregarDiagnostico/:id", [
     validarJWT,
     validarRolMedicoAdmin,
+    validarTest,
     check('diagnosis', 'El diagnostico del paciente es obligatorio').not().isEmpty(),
     check('medicines', 'Las medicinas recetadas del paciente es obligatorio').not().isEmpty(),
     check('id', 'ID no es valido de mongo').isMongoId(),

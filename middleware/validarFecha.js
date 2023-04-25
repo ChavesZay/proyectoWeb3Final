@@ -24,4 +24,33 @@ const validarFecha = async (req = request, res = response, next) => {
     next();
 }
 
-module.exports = { validarFecha }
+const validarFechaQuerry = async (req = request, res = response, next) => {
+    try {
+        let{date}=req.query;
+        let fechaActual = new Date();
+        const fecha= new Date(date);
+        fechaActual=new Date();
+        fechaActual.setHours(00);
+        if (fecha< fechaActual) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'La fecha no es valida'
+            })
+        } else if (fecha.getDay() == 0) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Los domingos no se trabaja'
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error en la fecha'
+        })
+    }
+    next();
+}
+
+module.exports = { validarFecha, 
+                   validarFechaQuerry }

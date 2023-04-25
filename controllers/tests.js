@@ -5,7 +5,7 @@ const obtenerTestId = async (req = request, res = response) => {
     try {
         const { id } = req.params;
         const test = await Consult.findById(id, { 'test': 1, '_id': 1 });
-        res.json(
+        res.status(200).json(
             {
                 ok: 200,
                 test
@@ -19,9 +19,8 @@ const obtenerTestId = async (req = request, res = response) => {
 
 const obtenerListTests = async (req = request, res = response) => {
     try {
-        const { id } = req.params;
         const tests = await Consult.find({ state: true, 'test.testCategory': { $ne:"", }, 'test': { $not: { $size: 0 } } }, {'patient':1,'test': 1,'date':1});
-        res.json(
+        res.status(200).json(
             {
                 ok: 200,
                 tests
@@ -39,10 +38,9 @@ const actualizarTestOrina = async (req = request, res = response) => {
         const examenes = req.body
         const newConsult = await Consult.findByIdAndUpdate(id, { $set: { "test.$[elem].testType": examenes.testType } },
             { arrayFilters: [{ "elem.testCategory": "Orina" }], new: true });
-            
-        res.json(
+        res.status(200).json(
             {
-                ok: 200,
+                ok: "Los examenes de orina se agregaron correctamente",
                 newConsult
             }
         );
@@ -57,13 +55,14 @@ const actualizarTestSangre = async (req = request, res = response) => {
         const examenes = req.body
         const newConsult = await Consult.findByIdAndUpdate(id, { $set: { "test.$[elem].testType": examenes.testType } },
         { arrayFilters: [{ "elem.testCategory": "Sangre" }], new: true });
-        res.json(
+        res.status(200).json(
             {
-                ok: 200,
+                ok: "Los examenes de sangre se agregaron correctamente",
                 newConsult
             }
         );
     } catch (error) {
+        console.log(error)
         throw new Error('Error al actualizar test de sangre');
     }
 }
@@ -71,11 +70,11 @@ const actualizarTestSangre = async (req = request, res = response) => {
 const elimianarTestOrina = async (req = request, res = response) => {
     try {
         const { id } = req.params;
-        const newConsult = await Consult.findByIdAndUpdate(id, { $set: { "test.$[elem].testType": [] } },
+        const newConsult = await Consult.findByIdAndUpdate(id, { $set: { "test.$[elem].testType": {} } },
         { arrayFilters: [{ "elem.testCategory": "Orina" }], new: true });
-          res.json(
+        res.status(200).json(
             {
-                ok: 200,
+                ok: "Los examenes de orina se eliminaron correctamente",
                 newConsult
             }
         );
@@ -88,11 +87,11 @@ const elimianarTestOrina = async (req = request, res = response) => {
 const elimianarTestSangre = async (req = request, res = response) => {
     try {
         const { id } = req.params;
-        const newConsult = await Consult.findByIdAndUpdate(id, { $set: { "test.$[elem].testType": [] } },
+        const newConsult = await Consult.findByIdAndUpdate(id, { $set: { "test.$[elem].testType": {} } },
         { arrayFilters: [{ "elem.testCategory": "Sangre" }], new: true });
-          res.json(
+        res.status(200).json(
             {
-                ok: 200,
+                ok: "Los examenes de sangre se eliminaron correctamente",
                 newConsult
             }
         );

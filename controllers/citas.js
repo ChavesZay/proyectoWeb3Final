@@ -17,7 +17,12 @@ const citasGET = async (req = request, res = response) => {
         );
     
     } catch (error) {
-        throw new Error('Error en el metodo GET de citas');
+        res.json(
+            {
+                ok: 400,
+                msg:"Error al mostrar las citas"
+            }
+        );
     }
 }
 
@@ -33,8 +38,13 @@ const citasGETById = async (req = request, res = response) => {
         );
     
     } catch (error) {
-        throw new Error('Error en el metodo GET de citas');
-    }
+        res.json(
+            {
+                ok: 400,
+                msg:"Error al mostar la cita"
+            }
+        );
+        }
 }
 
 const doctorsCitasGET = async (req = request, res = response) => {
@@ -48,8 +58,13 @@ const doctorsCitasGET = async (req = request, res = response) => {
         );
     
     } catch (error) {
-        throw new Error('Error en el metodo GET de doctores');
-    }
+        res.json(
+            {
+                ok: 400,
+                msg:"Error al mostrar los datos de los doctores"
+            }
+        );
+        }
 }
 
 
@@ -70,7 +85,12 @@ const citasHorarioPOST = async (req = request, res = response) => {
         );
     } catch (error) {
         console.log(error);
-        throw new Error('Error en el metodo Post de horarios de citas');
+        res.json(
+            {
+                ok: 400,
+                msg:"Error al enviar los datos de la cita"
+            }
+        );
     }
 }
 
@@ -93,7 +113,12 @@ const horariosGet = async (req = request, res = response) => {
       
     } catch (error) {
         console.log(error);
-        throw new Error('Error en el metodo GET de Horarios');
+        res.json(
+            {
+                ok: 400,
+                msg:"Error al mostrar los horarios disponibles"
+            }
+        );
     }
 }
 
@@ -117,7 +142,12 @@ const createCitaGET = async (req = request, res = response) => {
         );
     
     } catch (error) {
-        throw new Error('Error al obtener los datos para crear una cita');
+        res.json(
+            {
+                ok: 400,
+                msg:"Error al enviar los datos de la cita"
+            }
+        );
     }
 }
 
@@ -139,7 +169,12 @@ const saveCitaPOST = async (req = request, res = response) => {
         });
        
     } catch (error) {
-        throw new Error('Error al guardar la cita');
+        res.json(
+            {
+                ok: 400,
+                msg:"Error al modificar la cita"
+            }
+        );
     }
 }
 
@@ -156,7 +191,12 @@ const deteleCita = async (req = request, res = response) => {
     }
     catch (err) {
         console.log(err);
-        throw new Error('Error en el metodo DELETE');
+        res.json(
+            {
+                ok: 400,
+                msg:"Error al eliminar la cita"
+            }
+        );
     }
 }
 

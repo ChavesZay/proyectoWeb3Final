@@ -6,7 +6,7 @@ const validarEstadoCita = async (req = request, res = response, next) => {
         const { id } = req.params;
         const cita = await Appointment.findById(id);
         
-        if (cita.state==false) {
+        if (cita&&cita.state==false) {
             return res.status(400).json({
                 ok: false,
                 msg: 'Esta cita ya esta eliminada'

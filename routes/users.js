@@ -3,7 +3,9 @@ const { check } = require('express-validator');
 const { validate_fields } = require('../middleware/validation-field');
 const { validarJWT } = require("../middleware/validateJWT");
 const { db_ExistEmail } = require("../helpers/db_validates");
-const { validarRolUser } = require('../middleware/validarRoles.js')
+const { validarRolUser } = require('../middleware/validarRoles.js');
+const { validarEstadoUser} = require('../middleware/validarEstados.js')
+
 
 
 
@@ -52,8 +54,9 @@ router.delete(
     [
         validarJWT,
         validarRolUser,
+        validarEstadoUser,
         check("id", "ID no valido en mongo").isMongoId(),
-        validate_fields,
+        validate_fields
     ],
 
     usersDELETE

@@ -7,35 +7,44 @@ const generarJWT =require('../helpers/generarJWT.js')
 
 const login = async (req = request, res = response) => {
     const { email, password } = req.body;
-
-    const user = await Usuario.findOne({ email });
-    const rol=user.role;
-    if (!user) {
-        return res.status(400).json({
-            ok: false,
-            msg: "El email no es correcto",
-            email
-        })
-    }
-    const passwordValid=bcrypt.compareSync(password,user.password);
-    if (!passwordValid) {
-        return res.status(400).json({
-            ok: false,
-            msg: "El email o password no es correcto",
-            password
-        })
-    }
-    //Validar el JsonWebToken
-    //await porque es una promise
-    const token =await generarJWT(user.id);
-    return res.status(200).json({
-        ok: true,
-        msg: "Estoy desde el login",
-        email,
-        password, 
-        token,
-        rol
+    try {
+      const user = await Usuario.findOne({ 'email':email, 'state':true});
+   
+      if (!user) {
+          return res.status(400).json({
+              ok: false,
+              msg: "El email no es correcto",
+              email
+          })
+      }
+      const passwordValid=bcrypt.compareSync(password,user.password);
+      if (!passwordValid) {
+          return res.status(400).json({
+              ok: false,
+              msg: "El email o password no es correcto",
+              password
+          })
+      }
+      //Validar el JsonWebToken
+      //await porque es una promise
+      const token =await generarJWT(user.id);
+      const rol=user.role;
+      return res.status(200).json({
+          ok: true,
+          msg: "Estoy desde el login",
+          email,
+          password, 
+          token,
+          rol
+      })
+      
+    } catch (error) {
+      return res.status(400).json({
+        ok: false,
+        msg: "Error al loguearse",
+        password
     })
+    }
 }
 
 const googleSingIn = async (req = request, res = response) => {
@@ -51,13 +60,12 @@ const googleSingIn = async (req = request, res = response) => {
   
       //Cuarto paso Generar la referencia para saber si el usuario ya existe
   
-      let usuario = await Usuario.findOne({ email });
+      let usuario = await Usuario.findOne({ email,'state':true});
   
       if (!usuario) {
         const data = {
           name: name,
           email: email,
-          //El hash se le delega a google
           password: "p",
           google: true,
           role: "public",

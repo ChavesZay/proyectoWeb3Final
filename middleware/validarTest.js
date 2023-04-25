@@ -5,17 +5,26 @@ const validarTest = async (req = request, res = response, next) => {
     try {
         const {testCategory } = req.body;
         const test = ['sangre', 'orina'];
-
+        let hasInvalidElement=false;
         if (testCategory) {
-          await  testCategory.forEach(element => {
+            testCategory.forEach(element => {
                 if (!test.includes(element.toLowerCase())) {
-                    return res.status(400).json({
-                        ok: false,
-                        msg: 'El tipo de examen no es valido',
-                        element
-                    })
+                   hasInvalidElement=true;
                 }
             });
+        }
+        if(hasInvalidElement){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Los tipos de examenes no son validos, solo se aceptan de orina y sangre'
+            })
+        }
+
+        if(testCategory&&testCategory.length>2){
+            return res.status(400).json({
+                ok: false,
+                msg: 'El paciente solo puede tener 2 tipos de examenes'
+            })
         }
     } catch (error) {
         console.log(error)
