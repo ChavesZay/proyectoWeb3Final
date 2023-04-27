@@ -54,6 +54,7 @@ router.post("/", [
       ),
     check('height', 'La altura del paciente es obligatorio').not().isEmpty(),
     check('pressure', 'La presión del paciente es obligatorio').not().isEmpty(),
+    check('pressure', 'La presión del paciente es en formato de número').isInt(),
     check('symptoms', 'Los sintomas del paciente es obligatorio').not().isEmpty(),
     validate_fields, validarPaciente,], consultPOST);
 
