@@ -8,6 +8,7 @@ const db_ExistEmail = async (email = "") => {
   }
 };
 
+
 const db_ExistDNI = async (dni = "") => {
   const existDNI = await Paciente.findOne({ dni }).exec();
   if (existDNI) {

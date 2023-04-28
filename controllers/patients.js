@@ -13,7 +13,10 @@ const patientsGET = async (req = request, res = response) => {
     });
   } catch (err) {
     console.log(err);
-    throw new Error("Error en el metodo GET");
+    res.json({
+      ok: 400,
+      msg: "Error al mostrar los pacientes"
+  })
   }
 };
 
@@ -29,7 +32,10 @@ const patientsGETById = async (req = request, res = response) => {
     });
   } catch (err) {
     console.log(err);
-    throw new Error("Error en el metodo GET");
+    res.json({
+      ok: 400,
+      msg: "Error al mostrar el paciente"
+  })
   }
 };
 
@@ -71,7 +77,10 @@ const patientsPOST = async (req = request, res = response) => {
     });
   } catch (err) {
     console.log(err);
-    throw new Error("Error en el metodo POST");
+    res.json({
+      ok: 400,
+      msg: "Error al guardar el paciente"
+  })
   }
 };
 
@@ -95,7 +104,10 @@ const patientsPUT = async (req = request, res = response) => {
     });
   } catch (err) {
     console.log(err);
-    throw new Error("Error en el metodo PUT");
+    res.json({
+      ok: 400,
+      msg: "Error al modificar el paciente"
+  })
   }
 };
 
@@ -111,7 +123,10 @@ const patientsDELETE = async (req = request, res = response) => {
     });
   } catch (err) {
     console.log(err);
-    throw new Error("Error en el metodo DELETE");
+    res.json({
+      ok: 400,
+      msg: "Error al eliminar el paciente"
+  })
   }
 };
 

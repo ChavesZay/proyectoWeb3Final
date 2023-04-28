@@ -12,7 +12,7 @@ const usersGET = async (req = request, res = response) => {
       });
     } catch (err) {
       console.log(err);
-      throw new Error("Error en el metodo GET");
+      throw new Error("Error en el metodo GET de usurios");
     }
   };
   
@@ -28,7 +28,7 @@ const usersGET = async (req = request, res = response) => {
       });
     } catch (err) {
       console.log(err);
-      throw new Error("Error en el metodo GET");
+      throw new Error("Error en el metodo GETById de los usuarios");
     }
   };
   
@@ -56,7 +56,7 @@ const usersPOST = async (req = request, res = response) => {
     }
     catch (err) {
         console.log(err);
-        throw new Error('Error en el metodo POST');
+        throw new Error('Error en el metodo POST de los usuarios');
     }
 }
 
@@ -93,7 +93,7 @@ const usersPUT = async (req = request, res = response) => {
     }
     catch (err) {
         console.log(err);
-        throw new Error('Error en el metodo PUT');
+        throw new Error('Error en el metodo PUT de los usuarios');
     }
 }
 
@@ -122,7 +122,7 @@ const usersDELETE = async (req = request, res = response) => {
     }
     catch (err) {
         console.log(err);
-        throw new Error('Error en el metodo DELETE');
+        throw new Error('Error en el metodo DELETE de los usuarios');
     }
 }
 

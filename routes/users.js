@@ -5,6 +5,7 @@ const { validarJWT } = require("../middleware/validateJWT");
 const { db_ExistEmail } = require("../helpers/db_validates");
 const { validarRolUser } = require('../middleware/validarRoles.js');
 const { validarEstadoUser} = require('../middleware/validarEstados.js')
+const {existRole}= require('../helpers/validateRoles')
 
 
 
@@ -45,9 +46,13 @@ router.put("/:id", [
     validarJWT,
     validarRolUser,
     check("id", "ID no valido en mongo").isMongoId(),
+    check("role").custom((role) => existRole(role)),
     validate_fields
 ],
     usersPUT);
+
+    //
+
 
 router.delete(
     "/:id",

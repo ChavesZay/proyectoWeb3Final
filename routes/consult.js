@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { validarJWT } = require('../middleware/validateJWT.js');
 const { validate_fields } = require('../middleware/validation-field.js');
 const { check } = require('express-validator');
-const { validarRolMedicoAdmin } = require('../middleware/validarRoles.js')
+const { validarRolMedicoAdmin,validarRolInicioConsult } = require('../middleware/validarRoles.js')
 const { validarPaciente } = require('../middleware/validarPersonas.js')
 const { validarEstadoConsult } = require('../middleware/validarEstados.js')
 const { validarTest } = require('../middleware/validarTest.js')
@@ -43,7 +43,7 @@ router.get("/pendingConsults", [
 
 router.post("/", [
     validarJWT,
-    validarRolMedicoAdmin,
+    validarRolInicioConsult,
     check('dni', 'El dni del paciente es obligatorio').not().isEmpty(),
     check('weight', 'El peso del paciente es obligatorio').not().isEmpty(),
     check("weight", "El peso debe tener un formato válido (g/kg)").matches(

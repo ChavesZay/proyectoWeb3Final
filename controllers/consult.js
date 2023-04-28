@@ -15,7 +15,10 @@ const consultGET = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        throw new Error('Error en el metodo GET de consultas');
+        res.json({
+            ok: 400,
+            msg: "Error al mostrar todas las consultas"
+        })
     }
 }
 
@@ -30,7 +33,10 @@ const consultGETById = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        throw new Error('Error en el metodo GET de consultas');
+        res.json({
+            ok: 400,
+            msg: "Error al mostrar la consulta"
+        })
     }
 }
 //Lista de consultas con diagnostico
@@ -45,7 +51,10 @@ const completConsulstGET = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        throw new Error('Error en el metodo GET de consultas');
+        res.json({
+            ok: 400,
+            msg: "Error al mostrar las consultas completas"
+        })
     }
 }
 
@@ -60,7 +69,10 @@ const pendingConsultGET = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        throw new Error('Error en el metodo GET de consultas');
+        res.json({
+            ok: 400,
+            msg: "Error al mostrar las consultas pendientes"
+        })
     }
 }
 
@@ -81,7 +93,10 @@ const consultPOST = async (req = request, res = response) => {
         )
     } catch (error) {
         console.log(error);
-        throw new Error('Error en el metodo POST de consultas');
+        res.json({
+            ok: 400,
+            msg: "Error al guardar una consulta"
+        })
     }
 }
 
@@ -106,7 +121,10 @@ const agregarDiagnosticoPUT = async (req = request, res = response) => {
 
     } catch (error) {
         console.log(error)
-        throw new Error('Error en el metodo agregar diagnostico de consultas');
+        res.json({
+            ok: 400,
+            msg: "Error al agregar el diagnostico a una consulta"
+        })
     }
 }
 
@@ -132,7 +150,10 @@ const consultPUT = async (req = request, res = response) => {
         }
         )
     } catch (error) {
-        throw new Error('Error en el metodo PUT de consultas');
+        res.json({
+            ok: 400,
+            msg: "Error al modificar una consulta"
+        })
     }
 }
 
@@ -156,7 +177,7 @@ const consultDELETE = async (req = request, res = response) => {
     } catch (error) {
         res.json({
             ok: 400,
-            msg: "Error desde el metodo Delete"
+            msg: "Error al eliminar una consulta"
         })
         
     }

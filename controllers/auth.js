@@ -92,12 +92,11 @@ const googleSingIn = async (req = request, res = response) => {
         token
       });
   
-      console.log("Creacion correcta del usuario en google");
     } catch (err) {
       console.log(err);
       res.status(400).json({
         ok: false,
-        msg: "El token no se pudo verificar. Intentar con otro",
+        msg: "La cuenta de google no se pudo verificar. Intentar con otro",
       });
     }
   };

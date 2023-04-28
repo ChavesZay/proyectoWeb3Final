@@ -7,7 +7,7 @@ const { validarJWT } = require('../middleware/validateJWT.js')
 const { validarRolCita, validarRolDelete } = require('../middleware/validarRoles.js')
 const { validarFecha, validarFechaQuerry } = require('../middleware/validarFecha.js')
 const { validarDoctor, validarPaciente } = require('../middleware/validarPersonas.js')
-const { validarEstadoCita } = require('../middleware/validarEstadoCita.js')
+const { validarEstadoCita } = require('../middleware/validarEstados.js')
 
 const {
     citasGET,

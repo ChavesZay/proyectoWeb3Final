@@ -32,7 +32,7 @@ const validarRolCita = async (req = request, res = response, next) => {
     } catch (error) {
         return res.status(400).json({
             ok: false,
-            msg: 'Error de rol'
+            msg: 'Error de permisos de acceso'
         })
     }
     next();
@@ -56,7 +56,7 @@ const validarRolDelete = async (req = request, res = response, next) => {
     } catch (error) {
         return res.status(400).json({
             ok: false,
-            msg: 'Error de rol'
+            msg: 'Error de permisos de acceso'
         })
     }
     next();
@@ -81,7 +81,31 @@ const validarRolMedicoAdmin = async (req = request, res = response, next) => {
         console.log(error)
         return res.status(400).json({
             ok: false,
-            msg: 'Error de rol'
+            msg: 'Error de permisos de acceso'
+        })
+    }
+    next();
+}
+
+const validarRolInicioConsult = async (req = request, res = response, next) => {
+    const token = req.header('token');
+    try {
+        const roles = ['medico', 'admin','enfermera'];
+        const payload = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const { id } = payload;
+        const user = await User.findById(id);
+        if (!roles.includes(user.role.toLowerCase())) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tienes permiso de acceso a este modulo',
+                user
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error de permisos de acceso'
         })
     }
     next();
@@ -104,7 +128,7 @@ const validarRolUser = async (req = request, res = response, next) => {
     } catch (error) {
         return res.status(400).json({
             ok: false,
-            msg: 'Error de rol'
+            msg: 'Error de permisos de acceso'
         })
     }
     next();
@@ -117,5 +141,6 @@ module.exports = {
     validarRolCita,
     validarRolDelete,
     validarRolMedicoAdmin,
-    validarRolUser
+    validarRolUser,
+    validarRolInicioConsult
 }

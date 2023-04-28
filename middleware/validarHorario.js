@@ -18,13 +18,13 @@ const validarHorario = async (req = request, res = response, next) => {
         } else if (fecha.getDay() == 0) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Los domingos no se trabaja'
+                msg: 'Los domingos no se trabaja, agende para otro día'
             })
         }
     } catch (error) {
         return res.status(400).json({
             ok: false,
-            msg: 'Error en el Horario'
+            msg: 'Error al verificar el Horario'
         })
     }
     next();
@@ -53,7 +53,7 @@ const validarHora = async (req = request, res = response, next) => {
     } catch (error) {
         return res.status(400).json({
             ok: false,
-            msg: 'Error en el Hora',
+            msg: 'Error en el horario',
            
         })
     }

@@ -2,6 +2,8 @@ const { request, response } = require("express");
 const Consult =require('../models/consults.js')
 const User =require('../models/users.js')
 const Patient =require('../models/patients.js')
+const Appointment =require('../models/appointment.js')
+
 
 
 
@@ -68,5 +70,28 @@ const validarEstadoPatient = async (req = request, res = response, next) => {
     next();
 }
 
+const validarEstadoCita = async (req = request, res = response, next) => {
+    try {
+        const { id } = req.params;
+        const cita = await Appointment.findById(id);
+        
+        if (cita&&cita.state==false) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Esta cita ya esta eliminada'
+            })
+        }
+
+    } catch (error) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'Error en el estado de la cita'
+        })
+    }
+    next();
+}
+
+
 module.exports={validarEstadoConsult,
-                validarEstadoUser, validarEstadoPatient}
+                validarEstadoUser, validarEstadoPatient,
+                validarEstadoCita}
