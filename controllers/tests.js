@@ -12,7 +12,6 @@ const obtenerTestId = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        console.log(error)
         res.json({
             ok: 400,
             msg: "Error al obtener el test del paciente"
@@ -30,7 +29,6 @@ const obtenerListTests = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        console.log(error)
         res.json({
             ok: 400,
             msg: "Error al obtener la lista de tests del paciente"
@@ -71,7 +69,6 @@ const actualizarTestSangre = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        console.log(error)
         res.json({
             ok: 400,
             msg: "Error al insertar el test de sangre del paciente"
@@ -91,7 +88,7 @@ const elimianarTestOrina = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        console.log(error)
+        
         res.json({
             ok: 400,
             msg: "Error al eliminar los tests de orina del paciente"
@@ -111,7 +108,7 @@ const elimianarTestSangre = async (req = request, res = response) => {
             }
         );
     } catch (error) {
-        console.log(error)
+        
         res.json({
             ok: 400,
             msg: "Error al eliminar los tests de sangre del paciente"

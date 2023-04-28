@@ -11,8 +11,10 @@ const usersGET = async (req = request, res = response) => {
         users,
       });
     } catch (err) {
-      console.log(err);
-      throw new Error("Error en el metodo GET de usurios");
+        res.json({
+            ok: 400,
+            msg: "Error al mostrar los usuarios"
+        })
     }
   };
   
@@ -27,8 +29,10 @@ const usersGET = async (req = request, res = response) => {
         user
       });
     } catch (err) {
-      console.log(err);
-      throw new Error("Error en el metodo GETById de los usuarios");
+        res.json({
+            ok: 400,
+            msg: "Error al mostrar el usuario"
+        })
     }
   };
   
@@ -55,8 +59,10 @@ const usersPOST = async (req = request, res = response) => {
 
     }
     catch (err) {
-        console.log(err);
-        throw new Error('Error en el metodo POST de los usuarios');
+        res.json({
+            ok: 400,
+            msg: "Error al guardar el usuario"
+        })
     }
 }
 
@@ -92,8 +98,10 @@ const usersPUT = async (req = request, res = response) => {
         );
     }
     catch (err) {
-        console.log(err);
-        throw new Error('Error en el metodo PUT de los usuarios');
+        res.json({
+            ok: 400,
+            msg: "Error al modificar el usuario"
+        })
     }
 }
 
@@ -121,8 +129,10 @@ const usersDELETE = async (req = request, res = response) => {
 
     }
     catch (err) {
-        console.log(err);
-        throw new Error('Error en el metodo DELETE de los usuarios');
+        res.json({
+            ok: 400,
+            msg: "Error al eliminar el usuario"
+        })
     }
 }
 
