@@ -58,10 +58,11 @@ router.delete(
     "/:id",
     [
         validarJWT,
+       
+        check("id", "ID no valido en mongo").isMongoId(),
+        validate_fields,
         validarRolUser,
         validarEstadoUser,
-        check("id", "ID no valido en mongo").isMongoId(),
-        validate_fields
     ],
 
     usersDELETE
