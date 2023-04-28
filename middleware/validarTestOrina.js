@@ -23,7 +23,6 @@ const validarTestOrina = async (req = request, res = response, next) => {
             }
         }
     } catch (error) {
-        console.log(error)
         return res.status(400).json({
             ok: false,
             msg: 'Error al validar test de Orina'
