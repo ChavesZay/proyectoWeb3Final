@@ -27,7 +27,6 @@ const validarTest = async (req = request, res = response, next) => {
             })
         }
     } catch (error) {
-        console.log(error)
         return res.status(400).json({
             ok: false,
             msg: 'Error en el tipo de test'
