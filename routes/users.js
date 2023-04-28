@@ -44,9 +44,9 @@ router.post(
 
 router.put("/:id", [
     validarJWT,
-    validarRolUser,
     check("id", "ID no valido en mongo").isMongoId(),
     check("role").custom((role) => existRole(role)),
+    validarRolUser,
     validate_fields
 ],
     usersPUT);
